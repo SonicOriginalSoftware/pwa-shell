@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="author" content="" />
+    <meta name="description" content="Your web app description here" />
+    <meta name="keywords" content="web,app,keywords,here" />
+
+    <link rel="preload" href="app.css" as="style" />
+    <link rel="modulepreload" href="config.js" />
+    <link rel="modulepreload" href="init.js" />
+    <link rel="modulepreload" href="shell/app_manager.js" />
+    <link rel="modulepreload" href="shell/sw.js" />
+
+    <!-- component-framework preloads -->
+
+    <!-- Add app-specific preloads here -->
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/png" />
+    <link rel="apple-touch-icon" href="favicon.ico" type="image/png" />
+    <link rel="stylesheet" href="app.css" />
+    <script src="shell/app_manager.js" type="module"></script>
+  </head>
+
+  <body>
+    <span id="app-status">Loading...</span>
+  </body>
+</html>

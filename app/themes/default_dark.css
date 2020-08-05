@@ -1,0 +1,46 @@
+.dark-background {
+  background-color: #353535;
+  color: #eeeeee;
+}
+
+.dark-font-color {
+  color: black;
+}
+
+.dark-color {
+  background-color: #284b63;
+  color: white;
+}
+
+.bold-color {
+  background-color: #3c6e71;
+  color: white;
+}
+
+.button-color {
+  background-color: #284b63;
+  opacity: 0.8;
+  transition: opacity 0.25s;
+  color: white;
+}
+.button-color:hover {
+  opacity: 1;
+}
+.button-color:disabled {
+  background-color: #d9d9d9;
+  opacity: 1;
+}
+
+.select-color {
+  background-color: #3c6e71;
+  opacity: 0.6;
+  transition: 1s;
+  color: white;
+}
+.select-color:hover {
+  opacity: 1;
+}
+
+.background-color {
+  background-color: #d9d9d9;
+}
