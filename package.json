@@ -1,26 +1,26 @@
 {
-  "name": "@sonicoriginalsoftware/pwa-template",
+  "name": "@sonicoriginalsoftware/pwa-shell",
   "version": "0.1.0",
-  "description": "Template repository for the pwa-framework",
+  "description": "Repository for the pwa-framework app shell",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sonicoriginalsoftware/pwa-template.git"
+    "url": "git+https://github.com/sonicoriginalsoftware/pwa-shell.git"
   },
   "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "keywords": [
     "web",
-    "componets",
     "front-end",
     "framework",
-    "app"
+    "app",
+    "shell"
   ],
   "author": "Nathan Blair",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sonicoriginalsoftware/pwa-template/issues"
+    "url": "https://github.com/sonicoriginalsoftware/pwa-shell/issues"
   },
-  "homepage": "https://github.com/sonicoriginalsoftware/pwa-template#readme",
+  "homepage": "https://github.com/sonicoriginalsoftware/pwa-shell#readme",
   "devDependencies": {
     "@sonicoriginalsoftware/jester": "^0.2.4"
   },
