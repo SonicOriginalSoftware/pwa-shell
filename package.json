@@ -1,19 +1,11 @@
 {
-  "name": "@sonicoriginalsoftware/pwa-framework",
+  "name": "@sonicoriginalsoftware/pwa-template",
   "version": "0.1.0",
-  "description": "Web app framework based on Web Components and PWAs",
-  "directories": {
-    "bin": "bin",
-    "lib": "lib",
-    "test": "test"
-  },
-  "scripts": {
-    "test": "npx -n '--experimental-json-modules @sonicoriginalsoftware/jester"
-  },
+  "description": "Template repository for the pwa-framework",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sonicoriginalsoftware/pwa-framework.git"
+    "url": "git+https://github.com/sonicoriginalsoftware/pwa-template.git"
   },
   "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "keywords": [
@@ -26,12 +18,11 @@
   "author": "Nathan Blair",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sonicoriginalsoftware/pwa-framework/issues"
+    "url": "https://github.com/sonicoriginalsoftware/pwa-template/issues"
   },
-  "homepage": "https://github.com/sonicoriginalsoftware/pwa-framework#readme",
+  "homepage": "https://github.com/sonicoriginalsoftware/pwa-template#readme",
   "devDependencies": {
-    "@sonicoriginalsoftware/jester": "^0.2.4",
-    "@types/node": "^14.0.27"
+    "@sonicoriginalsoftware/jester": "^0.2.4"
   },
   "dependencies": {}
 }
