@@ -194,15 +194,7 @@ function handle_activate(activate_event) {
   )
 }
 
-/**
- * Handles incoming messages from the page
- *
- * If the message is 'skipWaiting', immediately places the waiting service worker
- * as the active service worker
- * If the message is 'getVersion', posts the APP_VERSION to the requesting client
- *
- * @param {ExtendableMessageEvent} message_event
- */
+/** @param {ExtendableMessageEvent} message_event */
 async function handle_message(message_event) {
   switch (message_event.data) {
     case "get_app_info":
