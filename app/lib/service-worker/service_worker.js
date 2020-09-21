@@ -7,9 +7,9 @@ export const messages = Object.freeze({
 
 /**
  * @param {keyof messages} message
- * @param {ServiceWorker | null} sw
+ * @param {ServiceWorker} sw
  *
- * @returns {Promise<{name: String, version: String}>}
+ * @returns {Promise<any>}
  */
 export async function message(
   message,

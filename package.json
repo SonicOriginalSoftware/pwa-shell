@@ -1,0 +1,19 @@
+{
+  "name": "@sonicoriginalsoftware/pwa-shell",
+  "version": "0.1.0",
+  "description": "Repository for the pwa-framework app shell",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sonicoriginalsoftware/pwa-shell.git"
+  },
+  "author": "Nathan Blair",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sonicoriginalsoftware/pwa-shell/issues"
+  },
+  "homepage": "https://github.com/sonicoriginalsoftware/pwa-shell#readme",
+  "scripts": {
+    "start": "node server/server.js"
+  }
+}

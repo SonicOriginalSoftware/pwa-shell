@@ -17,9 +17,9 @@ async function remove_obselete_databases() {
   ] of await indexedDB.databases()) {
     if (each_database_version === db_info.version) continue
     if (each_database_name !== db_info.name) {
-      console.log(`Removing ${each_database_name}...`)
+      console.debug(`  Removing ${each_database_name}...`)
       indexedDB.deleteDatabase(each_database_name)
-      console.log(`Removed ${each_database_name}!`)
+      console.debug(`  Removed ${each_database_name}!`)
     }
   }
   console.log(`Obsolete databases removed!`)
@@ -28,6 +28,8 @@ async function remove_obselete_databases() {
 /** Handles shell indexedDB creation */
 function install_db() {
   return new Promise((resolve, reject) => {
+    console.log(`Opening version ${db_info.version} of ${db_info.name}...`)
+
     const indexed_db_open_request = indexedDB.open(
       db_info.name,
       db_info.version
@@ -85,21 +87,21 @@ async function upgrade_db(db) {
     ++eachStoreNameIndex
   ) {
     const object_store_name = db.objectStoreNames[eachStoreNameIndex]
-    console.log(`Deleting object store: ${object_store_name}...`)
+    console.debug(`  Deleting object store: ${object_store_name}...`)
     db.deleteObjectStore(object_store_name)
-    console.log(`${object_store_name} deleted!`)
+    console.debug(`  ${object_store_name} deleted!`)
   }
 
   // TODO Could parallelize this...
   for (const [each_store_name, each_store_indices] of object_stores) {
-    console.log(`Creating object store: '${each_store_name}'...`)
+    console.debug(`  Creating object store: '${each_store_name}'...`)
     const object_store = db.createObjectStore(each_store_name)
     for (const each_index of each_store_indices) {
-      console.log(`Creating index: ${each_index.name}`)
+      console.debug(`    Creating index: ${each_index.name}`)
       object_store.createIndex(each_index.name, each_index.keyPath)
-      console.log(`Created index: ${each_index.name}`)
+      console.debug(`    Created index: ${each_index.name}`)
     }
-    console.log(`Created object store: ${each_store_name}`)
+    console.debug(`  Created object store: ${each_store_name}`)
   }
 
   await post_db_upgrade()
@@ -112,7 +114,7 @@ async function remove_all_caches() {
     (await caches.keys()).map(
       (each_cache_name) =>
         new Promise((resolve) => {
-          console.log(`Removing cache: ${each_cache_name}`)
+          console.debug(`  Removing cache: ${each_cache_name}`)
           resolve(caches.delete(each_cache_name))
         })
     )
@@ -126,7 +128,7 @@ async function install_caches() {
     app_caches.map(
       (each_cache_tuple) =>
         new Promise(async (resolve) => {
-          console.log(`Adding cache: ${each_cache_tuple[0]}`)
+          console.debug(`  Adding cache: ${each_cache_tuple[0]}`)
           resolve(
             await (await caches.open(each_cache_tuple[0])).addAll(
               each_cache_tuple[1]
@@ -168,11 +170,11 @@ async function get_cache_response(path, request) {
 
 /** @param {ExtendableEvent} install_event */
 function handle_install(install_event) {
-  console.log("Installing app...")
+  console.log(`Installing app version ${app_info.version}...`)
   install_event.waitUntil(
     new Promise(async (resolve) => {
       await Promise.all([install_db()])
-      console.log("App installed!")
+      console.log(`App version ${app_info.version} installed!`)
       resolve()
     })
   )
@@ -180,13 +182,13 @@ function handle_install(install_event) {
 
 /** @param {ExtendableEvent} activate_event */
 function handle_activate(activate_event) {
-  console.log("Activating...")
+  console.log(`Activating app version ${app_info.version}...`)
   activate_event.waitUntil(
     new Promise(async (resolve) => {
       await Promise.all([remove_obselete_databases(), remove_all_caches()])
       await install_caches()
       self.clients.claim()
-      console.log("Activated!")
+      console.log(`Activated app version ${app_info.version}!`)
       resolve()
     })
   )
@@ -222,6 +224,7 @@ async function handle_message(message_event) {
       })
       break
     case "update":
+      console.log(`Jumping to version ${app_info.version}...`)
       self.skipWaiting()
       break
   }
