@@ -1,6 +1,6 @@
 const app_info = Object.freeze({
   name: "App Name Here",
-  version: "0.1.0",
+  version: "0.0.1",
 })
 
 const db_info = Object.freeze({
