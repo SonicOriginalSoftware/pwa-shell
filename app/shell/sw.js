@@ -4,12 +4,11 @@ async function remove_obselete_databases() {
   if (navigator.userAgent.match(/firefox/i) !== null) {
     console.error(
       "Sorry, you appear to be using the shitty Firefox browser. " +
-        "Until the dumbass devs pull their heads out they asses, " +
+        "Until the dumbass devs pull they heads out they asses, " +
         "you won't be able to use this app properly."
     )
     return
   }
-
   console.log(`Removing obsolete databases...`)
   for (const [
     each_database_name,

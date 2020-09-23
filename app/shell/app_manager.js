@@ -1,14 +1,13 @@
-/** @typedef {Map<String, import('../lib/icomponent.js').IComponent>} Components */
+const ux_timeout_delay = 1000
+const app_status_element = document.getElementById("app-status")
 
-const appStatusElement = document.getElementById("app-status")
-
-/** @param {Components} components */
+/** @param {import("../init.js").Components} components */
 function load_initial_components(components) {
   const loadComponentsPromises = []
   for (const [id, component] of components) {
     loadComponentsPromises.push(
       new Promise(async (resolve, reject) => {
-        appStatusElement?.insertAdjacentHTML(
+        app_status_element?.insertAdjacentHTML(
           "beforeend",
           `<span style='display: block;' id='load-${id}'>Loading ${id}...</span>`
         )
@@ -39,45 +38,44 @@ function load_initial_components(components) {
  * @param {ServiceWorker} service_worker_waiting
  */
 async function register_components(service_worker_waiting) {
-  let initModule
   try {
-    initModule = await import("/init.js")
+    /** @type {import("../init.js")} */
+    var initModule = await import("/init.js")
   } catch (reason) {
     handle_error(`${reason.message} - Couldn't import init module`)
     return
   }
 
-  /** @type {Components} */
-  let components = new Map()
+  /** @type {import("../init.js").Components} */
+  const components = new Map()
 
   try {
     await initModule.add_initial_components(components)
   } catch (reason) {
-    handle_error(
+    return handle_error(
       `${reason.message} - Failed adding ${reason.component} component`
     )
-    return
   }
 
   try {
     await load_initial_components(components)
   } catch (reason) {
-    handle_error(
+    return handle_error(
       `${reason.message} - Failed loading ${reason.component} component`
     )
-    return
   }
 
   try {
     await initModule.attach_initial_components(components)
   } catch (reason) {
-    handle_error(
+    return handle_error(
       `${reason.message} - Failed attaching ${reason.component} component`
     )
-    return
   }
 
-  appStatusElement?.remove()
+  update_app_status("App ready!")
+  await new Promise((resolve) => setTimeout(resolve, ux_timeout_delay))
+  app_status_element?.remove()
 
   if (service_worker_waiting) {
     // TODO emit the app_update event
@@ -95,10 +93,11 @@ async function service_worker_registered(registered_service_worker) {
     if (registered_service_worker.active === undefined) {
       return handle_error("No service worker active!")
     } else if (registered_service_worker.installing) {
-      return handle_error("Service worker still installing...")
+      return update_app_status("Service worker still installing...")
     }
   }
 
+  update_app_status("App installed! Waiting for component registration...")
   const sw_module = await import("/lib/service-worker/service_worker.js")
 
   /** @type {{'name': String, version: String}} */
@@ -118,13 +117,15 @@ async function service_worker_registered(registered_service_worker) {
   register_components(registered_service_worker.waiting)
 }
 
-/** @param {any} err */
-function handle_error(err) {
-  appStatusElement.innerHTML = err || "Web app failed to load"
-  console.error(err)
+function update_app_status(message) {
+  app_status_element.innerHTML = message
 }
 
-window.addEventListener("load", async () => {})
+/** @param {any} err */
+function handle_error(err) {
+  update_app_status(err || "Web app failed to load")
+  console.error(err)
+}
 
 navigator.serviceWorker.addEventListener("controllerchange", () => {
   sessionStorage.clear()

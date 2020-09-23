@@ -4,5 +4,19 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+	},
+	"launch": {
+		"configurations": [
+			{
+				"type": "firefox",
+				"request": "launch",
+				"reAttach": true,
+				"name": "Launch localhost",
+				"url": "https://localhost:5000",
+				"webRoot": "${workspaceFolder}/app"
+			}
+		],
+		"compounds": []
+	}
 }
